@@ -1,4 +1,4 @@
-# aws-waf-ipsets - Import a list of networks in CIDR notation to a new IP set in AWS Web Application Firewall
+# Python3 script imports a list of networks in CIDR notation to a new IP set in AWS Web Application Firewall
 This script creates a new IPset in AWS WAF based on input from a TXT file. It can be used with long lists of networks like the ones you can download from https://www.countryipblocks.net/country_selection.php
 
 In addition to adding the networks to an IP set in AWS WAF, it also prunes the list of networks to a custom prefix length (i.e. /16) by folding smaller networks into their supernets dividing larger networks into their subnets.
