@@ -48,6 +48,7 @@ def update_ipset(ipset, ip_list):
     # Break up list of updates to comply with API limitations
     roundsof10 = int(updates.__len__() / 10)
     updateround = []
+    j_last = 0
     for i in range(roundsof10):
         del updateround[:]
         for j in range((i*10),(i*10)+10):
@@ -58,7 +59,16 @@ def update_ipset(ipset, ip_list):
             IPSetId = ipset['IPSet']['IPSetId'],
             Updates = updateround
         )
-        print('Added networks ' + str((i*10)) + ' to ' + str(j) + ' out of ' + updates.__len__() + '.')
+        print('Added networks ' + str((i * 10)) + ' to ' + str(j) + ' out of ' + str(updates.__len__()) + '.')
+        j_last = j
+    del updateround[:]
+    for i in range((j_last+1), updates.__len__()):
+        updateround.append(updates[i])
+    client.update_ip_set(
+        ChangeToken=client.get_change_token()['ChangeToken'],
+        IPSetId=ipset['IPSet']['IPSetId'],
+        Updates=updateround
+    )
     return True
 
 # Minimize list of IPv4 networks:
